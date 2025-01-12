@@ -118,3 +118,54 @@
 #         product.price=dct['price']
 #     productlist.append(product)
 #     return productlist
+
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+class Product(BaseModel):
+    prodId:int
+    prodName:str
+    price:float
+    stock:int
+
+################################################
+# Example 1 showing simple single product return
+
+# app = FastAPI()
+# @app.post("/product/")
+# async def addnew(product:Product):
+#     return product
+
+#  CLI: uvicorn 6_pydantic:app --reload
+
+
+################################################
+# Example 2 showing product list return
+
+productlist=[]
+app = FastAPI()
+@app.post("/product/")
+async def addnew(product:Product):
+    productlist.append(product)
+    return productlist
+
+#  CLI: uvicorn 6_pydantic:app --reload
+
+################################################
+# Example 3 showing product list return along with new column added on a condition
+
+
+# productlist=[]
+# app = FastAPI()
+# @app.post("/product/")
+# async def addnew(product:Product):
+#     dct=product.dict()
+#     price=dct['price']
+#     if price>5000:
+#         dct['price']=price+price*0.1
+#         product.price=dct['price']
+#     productlist.append(product)
+#     return productlist
+
+#  CLI: uvicorn 6_pydantic:app --reload
